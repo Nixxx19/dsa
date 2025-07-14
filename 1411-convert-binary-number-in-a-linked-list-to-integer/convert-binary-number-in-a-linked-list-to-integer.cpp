@@ -14,7 +14,7 @@ public:
     int result = 0;
     while (head != nullptr) 
     {
-        result = result * 2 + head->val;
+        result = (result << 1) + head->val;
         head = head->next;
     }
     return result;
