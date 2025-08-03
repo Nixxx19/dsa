@@ -1,21 +1,22 @@
-class Solution {
+class Solution 
+{
 public:
     bool isValid(string s) 
     {
-        char st[10000];
-        int top = -1;
+        stack<char> s_; 
         for (char c : s) 
         {
-            if (c == '(' || c == '{' || c == '[')
-                st[++top] = c;
+            if (c == '(' || c == '{' || c == '[') s_.push(c);
             else 
             {
-                if (top == -1) return false;
-                char t = st[top--];
-                if ((c == ')' && t != '(') || (c == '}' && t != '{') || (c == ']' && t != '['))
+                if (s_.empty()) return false;
+                char t = s_.top(); s_.pop();
+                if ((c == ')' && t != '(') || (c == '}' && t != '{') || (c == ']' && t != '[')) 
+                {
                     return false;
+                }
             }
         }
-        return top == -1;
+        return s_.empty();
     }
 };
