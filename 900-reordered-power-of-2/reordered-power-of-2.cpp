@@ -1,22 +1,36 @@
 class Solution {
 public:
-    // Returns the sorted digit signature of a number
-    string getSortedDigits(int num) {
-        string digits = to_string(num);
-        sort(digits.begin(), digits.end());
-        return digits;
+    bool isPowerOfTwo(int num) {
+        return num > 0 && (num & (num - 1)) == 0;
     }
 
-    bool reorderedPowerOf2(int n) {
-        string targetDigits = getSortedDigits(n);
+    bool backtrack(string& digits, vector<bool>& used, string& current) {
+        if (current.size() == digits.size()) {
+            if (current[0] == '0') return false; 
+            int number = stoi(current);
+            return isPowerOfTwo(number);
+        }
 
-        // Loop through powers of 2 from 2^0 to 2^29 (since 2^30 > 1e9)
-        for (int i = 0; i < 30; ++i) {
-            int powerOfTwo = 1 << i;
-            if (getSortedDigits(powerOfTwo) == targetDigits)
-                return true;
+        for (int i = 0; i < digits.size(); ++i) {
+            if (used[i]) continue;
+
+            used[i] = true;
+            current.push_back(digits[i]);
+
+            if (backtrack(digits, used, current)) return true;
+
+            current.pop_back();
+            used[i] = false;
         }
 
         return false;
+    }
+
+    bool reorderedPowerOf2(int n) {
+        string digits = to_string(n);
+        vector<bool> used(digits.size(), false);
+        string current;
+
+        return backtrack(digits, used, current);
     }
 };
