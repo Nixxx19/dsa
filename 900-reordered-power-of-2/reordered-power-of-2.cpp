@@ -1,36 +1,45 @@
 class Solution {
 public:
-    bool isPowerOfTwo(int num) {
-        return num > 0 && (num & (num - 1)) == 0;
+    bool isPowerOfTwo(int number) 
+    {
+        return number > 0 && (number & (number - 1)) == 0;
     }
 
-    bool backtrack(string& digits, vector<bool>& used, string& current) {
-        if (current.size() == digits.size()) {
-            if (current[0] == '0') return false; 
-            int number = stoi(current);
-            return isPowerOfTwo(number);
+    bool tryAllPermutations(string& inputDigits, vector<bool>& isUsed, string& currentNumber) 
+    {
+        if (currentNumber.size() == inputDigits.size()) 
+        {
+            if (currentNumber[0] == '0') return false; 
+            int num = stoi(currentNumber);
+            return isPowerOfTwo(num);
         }
 
-        for (int i = 0; i < digits.size(); ++i) {
-            if (used[i]) continue;
+        for (int i = 0; i < inputDigits.size(); ++i)
+        {
+            if (isUsed[i]) continue;
 
-            used[i] = true;
-            current.push_back(digits[i]);
+            if (i > 0 && inputDigits[i] == inputDigits[i - 1] && !isUsed[i - 1]) continue;
 
-            if (backtrack(digits, used, current)) return true;
+            isUsed[i] = true;
+            currentNumber.push_back(inputDigits[i]);
 
-            current.pop_back();
-            used[i] = false;
+            if (tryAllPermutations(inputDigits, isUsed, currentNumber)) return true;
+
+            currentNumber.pop_back();
+            isUsed[i] = false;
         }
 
         return false;
     }
 
-    bool reorderedPowerOf2(int n) {
+    bool reorderedPowerOf2(int n) 
+    {
         string digits = to_string(n);
-        vector<bool> used(digits.size(), false);
-        string current;
+        sort(digits.begin(), digits.end()); 
 
-        return backtrack(digits, used, current);
+        vector<bool> used(digits.size(), false);
+        string builtNumber = "";
+
+        return tryAllPermutations(digits, used, builtNumber);
     }
 };
