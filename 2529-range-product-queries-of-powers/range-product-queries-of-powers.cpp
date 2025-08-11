@@ -7,7 +7,7 @@ public:
         vector<int> powerList;
         
         
-        for (int i = 0; i <= 30; ++i) 
+        for (int i = 0; i < 31; ++i) 
         {
             if ((num >> i) & 1) 
             {
