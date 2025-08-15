@@ -1,20 +1,22 @@
 class Solution {
 public:
-    string solve(string s, int count, int n) {
-        if (count == n) return s;
-        string next = "";
-        for (int i = 0; i < s.size(); i++) {
-            int len = 1;
-            while (i + 1 < s.size() && s[i] == s[i + 1]) {
-                len++;
+    string generate(string current, int step, int target) {
+        if (step == target) return current;
+        string result = "";
+        int i = 0;
+        while (i < current.length()) {
+            int count = 1;
+            while (i + 1 < current.length() && current[i] == current[i + 1]) {
+                count++;
                 i++;
             }
-            next += to_string(len) + string(1, s[i]);
+            result += to_string(count) + current[i];
+            i++;
         }
-        return solve(next, count + 1, n);
+        return generate(result, step + 1, target);
     }
 
     string countAndSay(int n) {
-        return solve("1", 1, n);
+        return generate("1", 1, n);
     }
 };
