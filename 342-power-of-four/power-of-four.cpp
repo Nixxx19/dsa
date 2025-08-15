@@ -1,18 +1,23 @@
-class Solution {
+class Solution 
+{
 public:
-    bool isPowerOfFour(int n) {
-        if (n <= 0) return false;
-        string bin = bitset<40>(n).to_string();
-        int pos = -1;
-        for (int i = 0; i < bin.size(); i++) {
-            if (bin[i] == '1') {
-                pos = i;
+    bool isPowerOfFour(int number) 
+    {
+        if (number < 1) return false;
+        string bits = bitset<40>(number).to_string();
+        int position = -1;
+        for (int i = 0; i < 40; i++) 
+        {
+            if (bits[i] == '1') 
+            {
+                position = i;
                 break;
             }
         }
-        if (pos == -1 || pos % 2 == 0) return false;
-        for (int j = pos + 1; j < bin.size(); j++) {
-            if (bin[j] == '1') return false;
+        if (position == -1 || position % 2 == 0) return false;
+        for (int i = position + 1; i < 40; i++) 
+        {
+            if (bits[i] == '1') return false;
         }
         return true;
     }
