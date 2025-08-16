@@ -1,13 +1,14 @@
 class Solution 
 {
 public:
-    vector<vector<int>> reverseSubmatrix(vector<vector<int>>& grid, int x, int y, int k) 
+    vector<vector<int>> reverseSubmatrix(vector<vector<int>>& grid, int startRow, int startCol, int size) 
     {
-        for(int i = 0;i<k/2;i++)
+        for (int rowOffset = 0; rowOffset < size / 2; rowOffset++) 
         {
-            for(int j = 0;j<k;j++)
+            for (int colOffset = 0; colOffset < size; colOffset++) 
             {
-                swap(grid[x+i][y+j],grid[x+k-i-1][j+y]);
+                swap(grid[startRow + rowOffset][startCol + colOffset], 
+                     grid[startRow + size - rowOffset - 1][startCol + colOffset]);
             }
         }
         return grid;
