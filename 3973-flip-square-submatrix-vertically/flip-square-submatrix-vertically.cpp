@@ -1,14 +1,13 @@
 class Solution 
 {
 public:
-    vector<vector<int>> reverseSubmatrix(vector<vector<int>>& grid, int startRow, int startCol, int size) 
+    vector<vector<int>> reverseSubmatrix(vector<vector<int>>& grid, int row, int col, int len) 
     {
-        for (int rowOffset = 0; rowOffset < size / 2; rowOffset++) 
+        for (int r = 0; r < len / 2; r++) 
         {
-            for (int colOffset = 0; colOffset < size; colOffset++) 
+            for (int c = 0; c < len; c++) 
             {
-                swap(grid[startRow + rowOffset][startCol + colOffset], 
-                     grid[startRow + size - rowOffset - 1][startCol + colOffset]);
+                swap(grid[row + r][col + c], grid[row + len - r - 1][col + c]);
             }
         }
         return grid;
